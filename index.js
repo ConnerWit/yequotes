@@ -9,16 +9,13 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Serve static files from the public directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Cache quotes to avoid hitting Goodreads too often
 let cachedQuotes = [];
 let lastFetchTime = 0;
-const CACHE_LIFETIME = 3600000; // 1 hour
+const CACHE_LIFETIME = 3600000;
 
 const getQuotes = async () => {
-  // Use cached quotes if available and not too old
   const now = Date.now();
   if (cachedQuotes.length > 0 && now - lastFetchTime < CACHE_LIFETIME) {
     return cachedQuotes;
@@ -67,14 +64,12 @@ const getQuotes = async () => {
 
   await browser.close();
   
-  // Update cache
   cachedQuotes = quotesList;
   lastFetchTime = now;
   
   return quotesList;
 };
 
-// API endpoint to get a random quote
 app.get('/api/quote', async (_req, res) => {
   try {
     const quotes = await getQuotes();
@@ -90,7 +85,6 @@ app.get('/api/quote', async (_req, res) => {
   }
 });
 
-// Serve the main page
 app.get('/', (_req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });

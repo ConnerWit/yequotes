@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const quoteText = document.getElementById('quote-text');
     const newQuoteButton = document.getElementById('new-quote');
     
-    // Function to fetch a random quote
     const fetchRandomQuote = async () => {
         try {
             quoteText.textContent = 'Loading...';
@@ -20,9 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
     
-    // Fetch a quote when the page loads
     fetchRandomQuote();
     
-    // Fetch a new quote when the button is clicked
     newQuoteButton.addEventListener('click', fetchRandomQuote);
 });
